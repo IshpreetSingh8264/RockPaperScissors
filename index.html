@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <link rel="icon" type="image/x-icon" href="./BornDeveloper.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        select,
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #resultTag,
+        #computerOption {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .user-won {
+            color: green;
+        }
+
+        .computer-won {
+            color: red;
+        }
+
+        .draw {
+            color: #007BFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Your Option:</h3>
+        <select name="stonePaperScissor" id="stonePaperScissorOptions"></select>
+        <button onclick="game()">Select</button>
+        <div>
+            <h3>Computer's Option:</h3>
+            <h4 id="computerOption"></h4>
+        </div>
+        <div>
+            <h3>Result:</h3>
+            <h4 id="resultTag"></h4>
+        </div>
+    </div>
+
+    <script>
+        let options = ["Stone", "Paper", "Scissor"];
+
+        for (let option of options) {
+            let optionElement = document.createElement("option");
+            optionElement.value = option;
+            optionElement.innerHTML = option;
+            document.getElementById("stonePaperScissorOptions").appendChild(optionElement);
+        }
+
+        function game() {
+            let computerOption = options[Math.floor(Math.random() * options.length)];
+            document.getElementById("computerOption").innerHTML = computerOption;
+            let userInput = document.getElementById("stonePaperScissorOptions").value;
+            let userInputInInteger, computerOptionInInteger;
+
+            switch (userInput) {
+                case "Stone":
+                    userInputInInteger = 0;
+                    break;
+                case "Paper":
+                    userInputInInteger = 1;
+                    break;
+                case "Scissor":
+                    userInputInInteger = 2;
+                    break;
+            }
+
+            switch (computerOption) {
+                case "Stone":
+                    computerOptionInInteger = 0;
+                    break;
+                case "Paper":
+                    computerOptionInInteger = 1;
+                    break;
+                case "Scissor":
+                    computerOptionInInteger = 2;
+                    break;
+            }
+
+            calculateResult(userInputInInteger, computerOptionInInteger);
+        }
+
+        function calculateResult(userInput, computerOption) {
+            let resultTag = document.getElementById("resultTag");
+            resultTag.classList.remove("user-won", "computer-won", "draw");
+
+            if (userInput === computerOption) {
+                resultTag.innerHTML = "Draw";
+                resultTag.classList.add("draw");
+            } else if (
+                (computerOption === 0 && userInput === 2) || (userInput === 0 && computerOption === 1) || (userInput === 1 && computerOption === 2)
+            ) {
+                resultTag.innerHTML = "Computer Won";
+                resultTag.classList.add("computer-won");
+            } else {
+                resultTag.innerHTML = "User Won";
+                resultTag.classList.add("user-won");
+            }
+        }
+    </script>
+</body>
+
+</html>
